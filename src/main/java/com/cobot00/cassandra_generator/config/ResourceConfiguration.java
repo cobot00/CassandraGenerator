@@ -6,13 +6,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ResourceConfiguration {
 
-    @Value("${PG_URL}")
+    @Value("${spring.datasource.url}")
     private String pgUrl;
 
-    @Value("${PG_USER}")
+    @Value("${spring.datasource.username}")
     private String pgUser;
 
-    @Value("${PG_PSWD}")
+    @Value("${spring.datasource.password}")
     private String pgPswd;
 
     public String getPgUrl() {
