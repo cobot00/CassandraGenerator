@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import com.cobot00.cassandra_generator.config.ResourceConfiguration;
-import com.cobot00.cassandra_generator.model.dao.PostgreSQLDao;
+import com.cobot00.cassandra_generator.model.dao.PostgreSQLColumnDao;
 import com.cobot00.cassandra_generator.model.dto.ColumnEntity;
 
 @SpringBootApplication
@@ -19,7 +19,7 @@ public class CassandraGeneratorApplication {
     private ResourceConfiguration config;
 
     @Autowired
-    private PostgreSQLDao postgreSQLDao;
+    private PostgreSQLColumnDao columnDao;
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(CassandraGeneratorApplication.class, args);
@@ -33,7 +33,8 @@ public class CassandraGeneratorApplication {
         System.out.println("pgUser: " + config.getPgUser());
         System.out.println("pgPswd: " + config.getPgPswd());
 
-        List<ColumnEntity> result = postgreSQLDao.select(Arrays.asList("data_types"));
+        List<ColumnEntity> result = columnDao.select(Arrays.asList("data_types"));
         System.out.println("size: " + result.size());
+
     }
 }

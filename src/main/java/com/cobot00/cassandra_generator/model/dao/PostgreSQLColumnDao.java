@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 
 @Component
 @AllArgsConstructor
-public class PostgreSQLDao extends SimpleDao<ColumnEntity, String> {
+public class PostgreSQLColumnDao extends SimpleDao<ColumnEntity, String> {
 
     private static final String COLUMN_NAME = "COLUMN_NAME";
     private static final String DATA_TYPE = "DATA_TYPE";
