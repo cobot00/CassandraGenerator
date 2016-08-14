@@ -14,6 +14,8 @@ import com.cobot00.cassandra_generator.model.dao.PostgreSQLKeyColumnDao;
 import com.cobot00.cassandra_generator.model.dto.CassandraInJavaField;
 import com.cobot00.cassandra_generator.model.dto.ColumnEntity;
 import com.cobot00.cassandra_generator.model.dto.KeyColumnEntity;
+import com.cobot00.cassandra_generator.model.dto.TableNameEntity;
+import com.cobot00.cassandra_generator.model.io.TableNameCSVReader;
 import com.cobot00.cassandra_generator.util.Utility;
 
 @Service
@@ -37,11 +39,18 @@ public class PG2CassandraService {
         String outputDir = config.getOutputDirectory() + File.separator + javaPackagePath;
         makeDirs(outputDir);
 
+        TableNameCSVReader tableNameCSVReader = new TableNameCSVReader();
+        List<TableNameEntity> tableNames = tableNameCSVReader
+                .read("table_name.csv");
+        tableNames.stream().forEach(table -> execute(table, outputDir));
+    }
+
+    private void execute(TableNameEntity table, String outputDir) {
         System.out.println("---");
-        List<ColumnEntity> columns = columnDao.select(Arrays.asList("data_types"));
+        List<ColumnEntity> columns = columnDao.select(Arrays.asList(table.getTableName()));
         System.out.println("size: " + columns.size());
 
-        List<KeyColumnEntity> keyColumns = keyColumnDao.select(Arrays.asList("multi_keys"));
+        List<KeyColumnEntity> keyColumns = keyColumnDao.select(Arrays.asList(table.getTableName()));
         System.out.println("size: " + keyColumns.size());
         keyColumns.stream().forEach(System.out::println);
 
@@ -52,8 +61,8 @@ public class PG2CassandraService {
                 .collect(Collectors.toList());
 
         ValocityWriter writer = new ValocityWriter();
-        String filePath = outputDir + File.separator + "DataTypes.java";
-        writer.write("DataTypes", config.getJavaPackagePath(), filePath, fields);
+        String filePath = outputDir + File.separator + table.getJavaClassName() + ".java";
+        writer.write(table.getJavaClassName(), config.getJavaPackagePath(), filePath, fields);
     }
 
     private void makeDirs(String path) {
