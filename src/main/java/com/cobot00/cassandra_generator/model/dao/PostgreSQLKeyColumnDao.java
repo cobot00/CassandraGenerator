@@ -33,7 +33,7 @@ public class PostgreSQLKeyColumnDao extends SimpleDao<KeyColumnEntity, String> {
       FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE KC
       INNER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS TC
       ON kc.table_name = tc.table_name AND kc.constraint_name = tc.constraint_name
-      WHERE kc.table_name = 'data_types'
+      WHERE kc.table_name = ?
       ORDER BY kc.constraint_name, kc.ordinal_position
      */
     @Override

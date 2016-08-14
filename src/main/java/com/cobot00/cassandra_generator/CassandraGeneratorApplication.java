@@ -34,10 +34,6 @@ public class CassandraGeneratorApplication {
 
     // TODO remove because this code is test
     public void run() {
-        System.out.println("pgUrl: " + config.getPgUrl());
-        System.out.println("pgUser: " + config.getPgUser());
-        System.out.println("pgPswd: " + config.getPgPswd());
-
         List<ColumnEntity> result = columnDao.select(Arrays.asList("data_types"));
         System.out.println("size: " + result.size());
 
