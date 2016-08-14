@@ -1,0 +1,12 @@
+package $package_path
+
+import lombok.Data;
+
+@Data
+public class $class_name {
+
+#foreach ($field in $fields)
+    $field
+#end
+
+}

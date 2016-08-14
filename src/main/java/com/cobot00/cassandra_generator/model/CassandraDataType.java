@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
-public enum CassandraFieldType {
+public enum CassandraDataType {
 
     INT("int"), STRING("String"), DOUBLE("double"), BIG_DECIMAL("BigDecimal"), LOCAL_DATE("LocalDate"), LOCAL_DATE_TIME(
             "LocalDateTime"), UUID("UUID"), BLOB("Blob");
