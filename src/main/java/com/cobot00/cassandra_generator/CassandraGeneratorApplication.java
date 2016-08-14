@@ -10,7 +10,9 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import com.cobot00.cassandra_generator.config.ResourceConfiguration;
 import com.cobot00.cassandra_generator.model.dao.PostgreSQLColumnDao;
+import com.cobot00.cassandra_generator.model.dao.PostgreSQLKeyColumnDao;
 import com.cobot00.cassandra_generator.model.dto.ColumnEntity;
+import com.cobot00.cassandra_generator.model.dto.KeyColumnEntity;
 
 @SpringBootApplication
 public class CassandraGeneratorApplication {
@@ -20,6 +22,9 @@ public class CassandraGeneratorApplication {
 
     @Autowired
     private PostgreSQLColumnDao columnDao;
+
+    @Autowired
+    private PostgreSQLKeyColumnDao keyColumnDao;
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(CassandraGeneratorApplication.class, args);
@@ -36,5 +41,8 @@ public class CassandraGeneratorApplication {
         List<ColumnEntity> result = columnDao.select(Arrays.asList("data_types"));
         System.out.println("size: " + result.size());
 
+        List<KeyColumnEntity> keyColumns = keyColumnDao.select(Arrays.asList("multi_keys"));
+        System.out.println("size: " + keyColumns.size());
+        keyColumns.stream().forEach(System.out::println);
     }
 }
