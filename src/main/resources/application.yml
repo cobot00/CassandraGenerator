@@ -4,3 +4,6 @@ spring:
     url: ${PG_URL}
     username: ${PG_USER}
     password: ${PG_PSWD}
+generator:
+  output_directory: ${OUTPUT_DIRECTORY}
+  java_package_path: ${JAVA_PACKAGE_PATH}
