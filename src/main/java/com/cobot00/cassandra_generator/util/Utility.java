@@ -1,5 +1,7 @@
 package com.cobot00.cassandra_generator.util;
 
+import java.io.File;
+
 import com.google.common.base.CaseFormat;
 
 public class Utility {
@@ -14,5 +16,10 @@ public class Utility {
 
     public static String toUpperCamel(String word) {
         return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, word);
+    }
+
+    public static String toFilePath(String packagePath) {
+        String[] dirs = packagePath.split("\\.");
+        return String.join(File.separator, dirs);
     }
 }

@@ -1,5 +1,6 @@
 package com.cobot00.cassandra_generator.service;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import com.cobot00.cassandra_generator.model.dao.PostgreSQLColumnDao;
 import com.cobot00.cassandra_generator.model.dao.PostgreSQLKeyColumnDao;
 import com.cobot00.cassandra_generator.model.dto.ColumnEntity;
 import com.cobot00.cassandra_generator.model.dto.KeyColumnEntity;
+import com.cobot00.cassandra_generator.util.Utility;
 
 @Service
 public class PG2CassandraService {
@@ -25,9 +27,14 @@ public class PG2CassandraService {
     private PostgreSQLKeyColumnDao keyColumnDao;
 
     public void execute() {
+        System.out.println("---");
         System.out.println("OutputDirectory: " + config.getOutputDirectory());
         System.out.println("JavaPackagePath: " + config.getJavaPackagePath());
+        makeDirs(config.getOutputDirectory());
+        String javaPackagePath = Utility.toFilePath(config.getJavaPackagePath());
+        makeDirs(config.getOutputDirectory() + File.separator + javaPackagePath);
 
+        System.out.println("---");
         List<ColumnEntity> result = columnDao.select(Arrays.asList("data_types"));
         System.out.println("size: " + result.size());
 
@@ -35,4 +42,15 @@ public class PG2CassandraService {
         System.out.println("size: " + keyColumns.size());
         keyColumns.stream().forEach(System.out::println);
     }
+
+    private void makeDirs(String path) {
+        File dir = new File(path);
+        if (dir.exists()) {
+            return;
+        }
+        if (!dir.mkdirs()) {
+            throw new RuntimeException();
+        }
+    }
+
 }
