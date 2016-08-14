@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 
 @Component
 @AllArgsConstructor
-public class PostgreSQLDao extends SimpleDao<ColumnEntity, String> {
+public class PostgreSQLColumnDao extends SimpleDao<ColumnEntity, String> {
 
     private static final String COLUMN_NAME = "COLUMN_NAME";
     private static final String DATA_TYPE = "DATA_TYPE";
@@ -32,6 +32,15 @@ public class PostgreSQLDao extends SimpleDao<ColumnEntity, String> {
         return entry;
     }
 
+    /*
+      SELECT
+        table_name, ordinal_position, column_name, data_type,
+        column_default, is_nullable, character_maximum_length,
+        numeric_precision, numeric_scale
+      FROM INFORMATION_SCHEMA.COLUMNS
+      WHERE table_name = ?
+      ORDER BY table_name, ordinal_position
+     */
     @Override
     protected String generateSql() {
         final StringBuilder sb = new StringBuilder();
@@ -54,8 +63,6 @@ public class PostgreSQLDao extends SimpleDao<ColumnEntity, String> {
 
     @Override
     protected ColumnEntity createEntity(ResultSet rs) throws SQLException {
-        //final H2ColumnType columnType = MySQLColumnTypeConverter.convert(rs.getString(DATA_TYPE));
-
         final ColumnEntity result = new ColumnEntity();
         result.setColumnName(rs.getString(COLUMN_NAME));
         result.setDataType(rs.getString(DATA_TYPE));
