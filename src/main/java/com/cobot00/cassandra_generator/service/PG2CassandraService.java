@@ -32,7 +32,8 @@ public class PG2CassandraService {
         System.out.println("JavaPackagePath: " + config.getJavaPackagePath());
         makeDirs(config.getOutputDirectory());
         String javaPackagePath = Utility.toFilePath(config.getJavaPackagePath());
-        makeDirs(config.getOutputDirectory() + File.separator + javaPackagePath);
+        String outputDir = config.getOutputDirectory() + File.separator + javaPackagePath;
+        makeDirs(outputDir);
 
         System.out.println("---");
         List<ColumnEntity> result = columnDao.select(Arrays.asList("data_types"));
@@ -41,6 +42,10 @@ public class PG2CassandraService {
         List<KeyColumnEntity> keyColumns = keyColumnDao.select(Arrays.asList("multi_keys"));
         System.out.println("size: " + keyColumns.size());
         keyColumns.stream().forEach(System.out::println);
+
+        ValocityWriter writer = new ValocityWriter();
+        String filePath = outputDir + File.separator + "DataTypes.java";
+        writer.write("DataTypes", config.getJavaPackagePath(), filePath);
     }
 
     private void makeDirs(String path) {
