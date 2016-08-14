@@ -5,42 +5,41 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.cobot00.cassandra_generator.model.CassandraFieldType;
+import com.cobot00.cassandra_generator.model.CassandraDataType;
 
 public class PG2CassandraFieldMapperTest {
 
     @Test
     public void getType() {
-        PG2CassandraFieldMapper target = new PG2CassandraFieldMapper();
-
         //integer
-        assertThat(target.getTypeForJava("smallint"), is(CassandraFieldType.INT));
-        assertThat(target.getTypeForJava("integer"), is(CassandraFieldType.INT));
-        assertThat(target.getTypeForJava("bigint"), is(CassandraFieldType.INT));
-        assertThat(target.getTypeForJava("int2"), is(CassandraFieldType.INT));
-        assertThat(target.getTypeForJava("int4"), is(CassandraFieldType.INT));
-        assertThat(target.getTypeForJava("int8"), is(CassandraFieldType.INT));
-        assertThat(target.getTypeForJava("int"), is(CassandraFieldType.INT));
+        assertThat(PG2CassandraFieldMapper.getTypeForJava("smallint"), is(CassandraDataType.INT));
+        assertThat(PG2CassandraFieldMapper.getTypeForJava("integer"), is(CassandraDataType.INT));
+        assertThat(PG2CassandraFieldMapper.getTypeForJava("bigint"), is(CassandraDataType.INT));
+        assertThat(PG2CassandraFieldMapper.getTypeForJava("int2"), is(CassandraDataType.INT));
+        assertThat(PG2CassandraFieldMapper.getTypeForJava("int4"), is(CassandraDataType.INT));
+        assertThat(PG2CassandraFieldMapper.getTypeForJava("int8"), is(CassandraDataType.INT));
+        assertThat(PG2CassandraFieldMapper.getTypeForJava("int"), is(CassandraDataType.INT));
 
         // float
-        assertThat(target.getTypeForJava("real"), is(CassandraFieldType.DOUBLE));
-        assertThat(target.getTypeForJava("double precision"), is(CassandraFieldType.DOUBLE));
-        assertThat(target.getTypeForJava("numeric"), is(CassandraFieldType.BIG_DECIMAL));
+        assertThat(PG2CassandraFieldMapper.getTypeForJava("real"), is(CassandraDataType.DOUBLE));
+        assertThat(PG2CassandraFieldMapper.getTypeForJava("double precision"), is(CassandraDataType.DOUBLE));
+        assertThat(PG2CassandraFieldMapper.getTypeForJava("numeric"), is(CassandraDataType.BIG_DECIMAL));
 
         // string
-        assertThat(target.getTypeForJava("varchar"), is(CassandraFieldType.STRING));
-        assertThat(target.getTypeForJava("character varying"), is(CassandraFieldType.STRING));
-        assertThat(target.getTypeForJava("text"), is(CassandraFieldType.STRING));
+        assertThat(PG2CassandraFieldMapper.getTypeForJava("varchar"), is(CassandraDataType.STRING));
+        assertThat(PG2CassandraFieldMapper.getTypeForJava("character varying"), is(CassandraDataType.STRING));
+        assertThat(PG2CassandraFieldMapper.getTypeForJava("text"), is(CassandraDataType.STRING));
 
         // date & timestamp
-        assertThat(target.getTypeForJava("date"), is(CassandraFieldType.LOCAL_DATE));
-        assertThat(target.getTypeForJava("timestamp with time zone"), is(CassandraFieldType.LOCAL_DATE_TIME));
-        assertThat(target.getTypeForJava("timestamp without time zone"), is(CassandraFieldType.LOCAL_DATE_TIME));
+        assertThat(PG2CassandraFieldMapper.getTypeForJava("date"), is(CassandraDataType.LOCAL_DATE));
+        assertThat(PG2CassandraFieldMapper.getTypeForJava("timestamp with time zone"),
+                is(CassandraDataType.LOCAL_DATE_TIME));
+        assertThat(PG2CassandraFieldMapper.getTypeForJava("timestamp without time zone"),
+                is(CassandraDataType.LOCAL_DATE_TIME));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void getTypeWhenError() {
-        PG2CassandraFieldMapper target = new PG2CassandraFieldMapper();
-        target.getTypeForJava("sometype");
+        PG2CassandraFieldMapper.getTypeForJava("sometype");
     }
 }
