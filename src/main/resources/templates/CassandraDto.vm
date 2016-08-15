@@ -1,12 +1,19 @@
 package $package_path
 
+import java.io.Serializable;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
-public class $class_name {
+public class $class_name implements Serializable {
 
+    private static final long serialVersionUID = 7923253794941954763L;
 #foreach ($field in $fields)
-    $field
+$field
 #end
 
 }
