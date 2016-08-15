@@ -27,12 +27,12 @@ public class CassandraInJavaField {
 
     public String toJavaField() {
         StringBuilder sb = new StringBuilder();
+        sb.append(System.getProperty("line.separator"));
         if (keyOrder >= 0) {
-            sb.append("@Key(order = " + keyOrder + ")");
+            sb.append("    @Key(order = " + keyOrder + ")");
             sb.append(System.getProperty("line.separator"));
-            sb.append("    ");
         }
-        sb.append("private ");
+        sb.append("    private ");
         sb.append(dataType.getType());
         sb.append(" ");
         sb.append(fieldName);
